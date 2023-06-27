@@ -5,43 +5,31 @@
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *head = NULL;
-	listint_t *current;
-	listint_t *p;
+	listint_t *swap, *next;
 
-
-	if (*list == NULL || (*list)->next == NULL)
+	if (list == NULL || *list == NULL)
 		return;
 
-	while (*list)
+	swap = (*list)->next;
+	while (swap)
 	{
-		current = *list;
-		*list = (*list)->next;
-		if (head == NULL || current->n < head->n)
+		next = swap->next;
+		while (swap->prev && swap->prev->n > swap->n)
 		{
-			printf("head is null\n");
-			current->next=head;
-			head = current;
-			print_list(head);
+			swap->prev->next = swap->next;
+			if (swap->next)
+				swap->next->prev = swap->prev;
+
+			swap->next = swap->prev;
+			swap->prev = swap->next->prev;
+			swap->next->prev = swap;
+			
+			if (!swap->prev)
+				*list = swap;
+			else
+				swap->prev->next = swap;
+			print_list(*list);
 		}
-		else
-		{
-			printf("else\n");
-			p = head;
-			while(p != NULL)
-			{
-				if (p->next == NULL || current->n < p->next->n)
-				{
-					printf("else --- if\n");
-					current->next = p->next;
-					p->next = current;
-					print_list(head);
-					break;
-				}
-				p = p->next;
-			}
-		}
-		
+		swap = next;
 	}
-	*list = head; 
 }

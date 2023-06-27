@@ -8,35 +8,31 @@
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *tmp, *curr;
-	int n1, n2;
+	listint_t *swap, *next;
 
-	if (!(*list) || !(*list)->next)
+	if (!(*list))
 		return;
-	curr = (*list)->next;
 
-	while (curr)
+	swap = (*list)->next;
+	while (swap)
 	{
-		tmp = curr->next;
-		n1 = curr->prev->n;
-		n2 = curr->n;
-		/*printf("n1 : %d\nn2 : %d\n\n", n1, n2);*/
-
-		while (curr->prev && n1 > n2)
+		next = swap->next;
+		while (swap->prev && swap->prev->n > swap->n)
 		{
-			curr->prev->next = tmp;
-			if (curr->next)
-				curr->next->prev = curr->prev;
-			curr->next = curr->prev;
-			curr->prev = curr->next->prev;
-			curr->next->prev = curr;
+			swap->prev->next = swap->next;
+			if (swap->next)
+				swap->next->prev = swap->prev;
 
-			if (curr->prev == NULL)
-				*list = curr;
+			swap->next = swap->prev;
+			swap->prev = swap->next->prev;
+			swap->next->prev = swap;
+
+			if (!swap->prev)
+				*list = swap;
 			else
-				curr->prev->next = curr;
+				swap->prev->next = swap;
+			print_list(*list);
 		}
-		print_list(*list);
-		curr = tmp;
+		swap = next;
 	}
 }

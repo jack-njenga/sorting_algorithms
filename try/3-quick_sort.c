@@ -1,5 +1,9 @@
 #include "main.h"
-
+/**
+ * swap - swapping function
+ * @num1: first int
+ * @num2: second int
+*/
 void swap(int *num1, int *num2)
 {
 	int tmp = *num1;
@@ -9,18 +13,22 @@ void swap(int *num1, int *num2)
 }
 
 /**
- * partition - partition by lomuto scheme
+ * partition - partition function
  * @arr: array
- * @low: low end of a subarray
- * @high: high end of a subarray
- * @size: number of elements in array
- * Return: int
+ * @low: starting index
+ * @high: Ending index
+ * @size: number of elements of the array
+ * 
+ * Return: element after partitioning
  */
 int partition(int arr[], int low, int high, size_t size)
 {
-	int pivot  = arr[high]; /* pivot */
+	int pivot;
 	int j;
-	int i = (low - 1);
+	int i;
+
+    pivot  = arr[high];
+    i = (low - 1);
 
 	for (j  = low; j  <= high - 1 ; j++)
 	{
@@ -28,12 +36,13 @@ int partition(int arr[], int low, int high, size_t size)
 		{
 			i++;
 			if (i != j)
-			{
-			    swap(&arr[i], &arr[j]);
-				print_array(arr, size);
-			}
+            {
+                swap(&arr[i], &arr[j]);
+			    print_array(arr, size);
+            }
 		}
 	}
+
 	i++;
 	if (i != high)
 	{
@@ -44,11 +53,11 @@ int partition(int arr[], int low, int high, size_t size)
 }
 
 /**
- * quickSort -  quickSort internal implementation
+ * quickSort -  quick_Sort helper function
  * @arr: array
- * @low: low bound for first subarray
- * @high: high index or pivot
- * @size: number of elements(optional for printing fx)
+ * @low: starting index
+ * @high: ending index
+ * @size: number of elements
  */
 
 void quickSort(int arr[], int low, int high, int size)
@@ -63,7 +72,8 @@ void quickSort(int arr[], int low, int high, int size)
 }
 
 /**
- * quick_sort - quick sort interface
+ * quick_sort - sorts an array of integers in
+ * ascending order using the Quick sort algorithm
  *
  * @array: array to size
  * @size: number of element in array
